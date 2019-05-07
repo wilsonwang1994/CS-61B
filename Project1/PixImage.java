@@ -398,6 +398,7 @@ public class PixImage {
    * and Sobel) are correct.
    */
   public static void main(String[] args) {
+
     // Be forwarned that when you write arrays directly in Java as below,
     // each "row" of text is a column of your image--the numbers get
     // transposed.

@@ -29,7 +29,9 @@ public class RunLengthEncoding implements Iterable {
    *  Define any variables associated with a RunLengthEncoding object here.
    *  These variables MUST be private.
    */
-
+   private DList list;
+   private int width;
+   private int height;
 
 
 
@@ -48,6 +50,10 @@ public class RunLengthEncoding implements Iterable {
 
   public RunLengthEncoding(int width, int height) {
     // Your solution here.
+    this.width = width;
+    this.height = height;
+    list = new DList();
+    list.insertEnd(width*height,0,0,0);
   }
 
   /**
@@ -74,6 +80,14 @@ public class RunLengthEncoding implements Iterable {
   public RunLengthEncoding(int width, int height, int[] red, int[] green,
                            int[] blue, int[] runLengths) {
     // Your solution here.
+    this.width = width;
+    this.height = height;
+    list = new DList();
+    for(int i=0; i<runLengths.length; i++){
+      list.insertEnd(runLengths[i], red[i], green[i], blue[i]);
+    }
+
+
   }
 
   /**
@@ -85,7 +99,7 @@ public class RunLengthEncoding implements Iterable {
 
   public int getWidth() {
     // Replace the following line with your solution.
-    return 1;
+    return width;
   }
 
   /**
@@ -96,7 +110,7 @@ public class RunLengthEncoding implements Iterable {
    */
   public int getHeight() {
     // Replace the following line with your solution.
-    return 1;
+    return height;
   }
 
   /**
@@ -108,7 +122,7 @@ public class RunLengthEncoding implements Iterable {
    */
   public RunIterator iterator() {
     // Replace the following line with your solution.
-    return null;
+    return new RunIterator(this.list);
     // You'll want to construct a new RunIterator, but first you'll need to
     // write a constructor in the RunIterator class.
   }
@@ -121,7 +135,22 @@ public class RunLengthEncoding implements Iterable {
    */
   public PixImage toPixImage() {
     // Replace the following line with your solution.
-    return new PixImage(1, 1);
+    DListNode curNode = list.head;
+    int num = curNode.item[0][0];
+    PixImage result = new PixImage(width, height);
+    for(int j=0; j<height; j++){
+      for(int i=0; i<width; i++){
+        if(num == 0){
+          curNode = curNode.next;
+          num = curNode.item[0][0];
+        }
+        result.setPixel(i,j,(short)curNode.item[1][0],
+                            (short)curNode.item[1][1],
+                            (short)curNode.item[1][2]);
+        num--;
+      }
+    }
+    return result;
   }
 
   /**
@@ -146,7 +175,7 @@ public class RunLengthEncoding implements Iterable {
   /**
    *  RunLengthEncoding() (with one parameter) is a constructor that creates
    *  a run-length encoding of a specified PixImage.
-   * 
+   *
    *  Note that you must encode the image in row-major format, i.e., the second
    *  pixel should be (1, 0) and not (0, 1).
    *
@@ -155,6 +184,49 @@ public class RunLengthEncoding implements Iterable {
   public RunLengthEncoding(PixImage image) {
     // Your solution here, but you should probably leave the following line
     // at the end.
+    width = image.getWidth();
+    height = image.getHeight();
+    int num = 0;
+    short curR = -1;
+    short curG = -1;
+    short curB = -1;
+    for(int j=0; j<height; j++){
+      for(int i=0; i<width; i++){
+        if(curR == image.getRed(i, j) &&
+          curG == image.getGreen(i, j) &&
+          curB == image.getBlue(i, j)){
+            continue;
+          } else{
+            num++;
+            curR == image.getRed(i, j);
+            curG == image.getGreen(i, j);
+            curB == image.getBlue(i, j);
+          }
+      }
+    }
+    curR = image.getRed(0, 0);
+    curG = image.getGreen(0, 0);
+    curB = image.getBlue(0, 0);
+    int length = 1;
+    int[] red = new int[num];
+    int[] green = new int[num];
+    int[] blue = new int[num];
+    int[] runLengths = new int[num];
+    num = 0;
+    for(int j=0; j<height; j++){
+      for(int i=0; i<width; i++){
+        if(curR == image.getRed(i, j) &&
+          curG == image.getGreen(i, j) &&
+          curB == image.getBlue(i, j)){
+            continue;
+          } else{
+            
+
+          }
+      }
+    }
+
+
     check();
   }
 
