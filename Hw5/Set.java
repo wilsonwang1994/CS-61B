@@ -110,7 +110,7 @@ public class Set {
         }
       }
     } catch (InvalidNodeException lbe) {
-      System.err.println("insert() failed.");
+      System.err.println("union() failed.");
     }
   }
 
