@@ -55,6 +55,9 @@ public class Set {
       while (current.isValidNode()) {
         int comp = c.compareTo(current.item());
         if (comp > 0) {
+          if (!current.next().isValidNode()) {
+            current.insertAfter(c);
+          }
         } else if (comp == 0) {
           break;
         } else {
@@ -86,6 +89,7 @@ public class Set {
    **/
   public void union(Set s) {
     // Your solution here.
+    
   }
 
   /**
@@ -153,6 +157,12 @@ public class Set {
     s3.insert(new Integer(3));
     s3.insert(new Integer(8));
     System.out.println("Set s3 = " + s3);
+
+    Set s4 = new Set();
+    s4.insert(new Integer(8));
+    s4.insert(new Integer(8));
+    s4.insert(new Integer(1));
+    System.out.println("Set s4 = " + s4);
 
     s.union(s2);
     System.out.println("After s.union(s2), s = " + s);
