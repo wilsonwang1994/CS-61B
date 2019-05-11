@@ -89,7 +89,29 @@ public class Set {
    **/
   public void union(Set s) {
     // Your solution here.
-    
+    ListNode currentL = this.setList.front();
+    ListNode currentR = s.setList.front();
+    try {
+      while (currentR.isValidNode()) {
+        if (!currentL.isValidNode()) {
+          this.setList.insertBack(currentR.item());
+          currentR = currentR.next();
+          continue;
+        }
+        int comp = ((Comparable)currentR.item()).compareTo(currentL.item());
+        if (comp > 0) {
+          currentL = currentL.next();
+        } else if (comp == 0) {
+          currentL = currentL.next();
+          currentR = currentR.next();
+        } else {
+          currentL.insertBefore(currentR.item());
+          currentR = currentR.next();
+        }
+      }
+    } catch (InvalidNodeException lbe) {
+      System.err.println("insert() failed.");
+    }
   }
 
   /**
@@ -157,12 +179,6 @@ public class Set {
     s3.insert(new Integer(3));
     s3.insert(new Integer(8));
     System.out.println("Set s3 = " + s3);
-
-    Set s4 = new Set();
-    s4.insert(new Integer(8));
-    s4.insert(new Integer(8));
-    s4.insert(new Integer(1));
-    System.out.println("Set s4 = " + s4);
 
     s.union(s2);
     System.out.println("After s.union(s2), s = " + s);
