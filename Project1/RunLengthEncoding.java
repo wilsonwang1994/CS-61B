@@ -184,47 +184,33 @@ public class RunLengthEncoding implements Iterable {
   public RunLengthEncoding(PixImage image) {
     // Your solution here, but you should probably leave the following line
     // at the end.
+    list = new DList();
     width = image.getWidth();
     height = image.getHeight();
-    int num = 0;
-    short curR = -1;
-    short curG = -1;
-    short curB = -1;
-    for(int j=0; j<height; j++){
-      for(int i=0; i<width; i++){
-        if(curR == image.getRed(i, j) &&
-          curG == image.getGreen(i, j) &&
-          curB == image.getBlue(i, j)){
-            continue;
-          } else{
-            num++;
-            curR == image.getRed(i, j);
-            curG == image.getGreen(i, j);
-            curB == image.getBlue(i, j);
-          }
-      }
-    }
+    short curR;
+    short curG;
+    short curB;
     curR = image.getRed(0, 0);
     curG = image.getGreen(0, 0);
     curB = image.getBlue(0, 0);
-    int length = 1;
-    int[] red = new int[num];
-    int[] green = new int[num];
-    int[] blue = new int[num];
-    int[] runLengths = new int[num];
-    num = 0;
+    int length = 0;
     for(int j=0; j<height; j++){
       for(int i=0; i<width; i++){
         if(curR == image.getRed(i, j) &&
           curG == image.getGreen(i, j) &&
           curB == image.getBlue(i, j)){
-            continue;
-          } else{
-            
-
-          }
+          length++;
+          continue;
+        } else{
+          list.insertEnd(length, curR, curG, curB);
+          curR = image.getRed(i, j);
+          curG = image.getGreen(i, j);
+          curB = image.getBlue(i, j);
+          length = 1;
+        }
       }
     }
+    list.insertEnd(length, curR, curG, curB);
 
 
     check();
@@ -237,6 +223,22 @@ public class RunLengthEncoding implements Iterable {
    */
   public void check() {
     // Your solution here.
+    int totalP = 0;
+    DListNode curNode = list.head;
+    for (int i=0; i<list.size-1; i++){
+      if (curNode.item[1][0] == curNode.next.item[1][0] &&
+          curNode.item[1][1] == curNode.next.item[1][1] &&
+          curNode.item[1][2] == curNode.next.item[1][2]){
+        System.out.println("Error: same RGB intensities");
+      }
+      totalP = totalP + curNode.item[0][0];
+      curNode = curNode.next;
+    }
+    totalP = totalP + curNode.item[0][0];
+    if (totalP != width * height){
+      System.out.println("Error: wrong size");
+    }
+
   }
 
 
