@@ -129,6 +129,29 @@ public class Set {
    **/
   public void intersect(Set s) {
     // Your solution here.
+    ListNode currentL = this.setList.front();
+    ListNode currentR = s.setList.front();
+    try {
+      while (currentL.isValidNode()) {
+        if (!currentR.isValidNode()) {
+          currentL = currentL.next();
+          currentL.prev().remove();
+          continue;
+        }
+        int comp = ((Comparable)currentR.item()).compareTo(currentL.item());
+        if (comp > 0) {
+          currentL = currentL.next();
+          currentL.prev().remove();
+        } else if (comp == 0) {
+          currentL = currentL.next();
+          currentR = currentR.next();
+        } else {
+          currentR = currentR.next();
+        }
+      }
+    } catch (InvalidNodeException lbe) {
+      System.err.println("intersect() failed.");
+    }
   }
 
   /**
