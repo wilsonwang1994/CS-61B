@@ -20,4 +20,19 @@ public class DList{
     }
     size++;
   }
+
+  protected void insertAfter(int num, int r, int g, int b, DListNode node){
+    if(node.next == null){
+      node.next = new DListNode(num, r, g, b);
+      node.next.prev = node;
+      tail = node.next;
+    } else{
+      node.next.prev = new DListNode(num, r, g, b);
+      node.next.prev.next = node.next;
+      node.next.prev.prev = node;
+      node.next = node.next.prev;
+    }
+    size++;
+  }
+
 }

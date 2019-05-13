@@ -262,6 +262,41 @@ public class RunLengthEncoding implements Iterable {
   public void setPixel(int x, int y, short red, short green, short blue) {
     // Your solution here, but you should probably leave the following line
     //   at the end.
+    int num = (width * y) + (x + 1);
+    int left = 0;
+    int right = 0;
+    DListNode curNode = list.head;
+    for(int i=0; i<list.size; i++){
+      num = num - curNode.item[0][0];
+      if(num <= 0){
+        right = -num;
+        left = curNode.item[0][0] - (right + 1);
+        break;
+      }
+      curNode = curNode.next;
+    }
+    if(red != curNode.item[1][0] || green != curNode.item[1][1] ||
+        blue != curNode.item[1][2]){
+      if(left>0){
+        list.insertAfter(left,curNode.item[1][0],curNode.item[1][0],
+                          curNode.item[1][0],curNode.prev);
+        curNode.item[0][0] = curNode.item[0][0] - left;
+        if(right>0){
+          list.insertAfter(right,curNode.item[1][0],curNode.item[1][0],
+                            curNode.item[1][0],curNode);
+          curNode.item[0][0] = 1;
+          curNode.item[1][0] = red;
+          curNode.item[1][1] = green;
+          curNode.item[1][2] = blue;
+        } else{
+          if(red == curNode.next.item[1][0] &&
+              green == curNode.next.item[1][1] &&
+              blue == curNode.next.item[1][2] &&){
+          }
+        }
+      }
+    }
+
     check();
   }
 
