@@ -1,0 +1,20 @@
+Part II
+------------------
+Our ADT is not as well protected as we would like.  There are several ways by
+which a hostile (or stupid) application can corrupt our DList (i.e., make it
+violate an invariant) through method calls alone.  Describe one in a text file
+named GRADER (which will be submitted with your code).  Assume that the
+application is NOT in the list package (which would be a remarkably
+inappropriate place to put an application).
+
+
+If we call the methods like insertAfter(), remove(), etc, but pass a DListNode that is in another DList, we will violet the szie invariant. 
+
+Ex:
+
+DList lst1 = new DList();
+lst1.insertFront(5);
+
+DList lst2 = new DList();
+lst2.remove(lst1.front());
+
