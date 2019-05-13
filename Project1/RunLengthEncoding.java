@@ -86,8 +86,6 @@ public class RunLengthEncoding implements Iterable {
     for(int i=0; i<runLengths.length; i++){
       list.insertEnd(runLengths[i], red[i], green[i], blue[i]);
     }
-
-
   }
 
   /**
@@ -135,13 +133,13 @@ public class RunLengthEncoding implements Iterable {
    */
   public PixImage toPixImage() {
     // Replace the following line with your solution.
-    DListNode curNode = list.head;
+    DListNode curNode = list.front();
     int num = curNode.item[0][0];
     PixImage result = new PixImage(width, height);
     for(int j=0; j<height; j++){
       for(int i=0; i<width; i++){
         if(num == 0){
-          curNode = curNode.next;
+          curNode = curNode.next();
           num = curNode.item[0][0];
         }
         result.setPixel(i,j,(short)curNode.item[1][0],
@@ -224,21 +222,20 @@ public class RunLengthEncoding implements Iterable {
   public void check() {
     // Your solution here.
     int totalP = 0;
-    DListNode curNode = list.head;
+    DListNode curNode = list.front();
     for (int i=0; i<list.size-1; i++){
-      if (curNode.item[1][0] == curNode.next.item[1][0] &&
-          curNode.item[1][1] == curNode.next.item[1][1] &&
-          curNode.item[1][2] == curNode.next.item[1][2]){
+      if (curNode.item[1][0] == curNode.next().item[1][0] &&
+          curNode.item[1][1] == curNode.next().item[1][1] &&
+          curNode.item[1][2] == curNode.next().item[1][2]){
         System.out.println("Error: same RGB intensities");
       }
       totalP = totalP + curNode.item[0][0];
-      curNode = curNode.next;
+      curNode = curNode.next();
     }
     totalP = totalP + curNode.item[0][0];
     if (totalP != width * height){
       System.out.println("Error: wrong size");
     }
-
   }
 
 
@@ -265,7 +262,7 @@ public class RunLengthEncoding implements Iterable {
     int num = (width * y) + (x + 1);
     int left = 0;
     int right = 0;
-    DListNode curNode = list.head;
+    DListNode curNode = list.front();
     for(int i=0; i<list.size; i++){
       num = num - curNode.item[0][0];
       if(num <= 0){
@@ -273,29 +270,41 @@ public class RunLengthEncoding implements Iterable {
         left = curNode.item[0][0] - (right + 1);
         break;
       }
-      curNode = curNode.next;
+      curNode = curNode.next();
     }
     if(red != curNode.item[1][0] || green != curNode.item[1][1] ||
         blue != curNode.item[1][2]){
-      if(left>0){
-        list.insertAfter(left,curNode.item[1][0],curNode.item[1][0],
-                          curNode.item[1][0],curNode.prev);
-        curNode.item[0][0] = curNode.item[0][0] - left;
-        if(right>0){
-          list.insertAfter(right,curNode.item[1][0],curNode.item[1][0],
-                            curNode.item[1][0],curNode);
-          curNode.item[0][0] = 1;
-          curNode.item[1][0] = red;
-          curNode.item[1][1] = green;
-          curNode.item[1][2] = blue;
-        } else{
-          if(red == curNode.next.item[1][0] &&
-              green == curNode.next.item[1][1] &&
-              blue == curNode.next.item[1][2] &&){
-          }
-        }
+      if(left>0 && right>0){
+        list.insertAfter(left,curNode.item[1][0],curNode.item[1][1],
+                          curNode.item[1][2],curNode.prev());
+        list.insertAfter(right,curNode.item[1][0],curNode.item[1][1],
+                          curNode.item[1][2],curNode);
+      } else if(left>0 && right<=0){
+        list.insertAfter(left,curNode.item[1][0],curNode.item[1][1],
+                          curNode.item[1][2],curNode.prev());
+      } else if(left<=0 && right>0){
+        list.insertAfter(right,curNode.item[1][0],curNode.item[1][1],
+                          curNode.item[1][2],curNode);
       }
+      curNode.item[0][0] = 1;
+      curNode.item[1][0] = red;
+      curNode.item[1][1] = green;
+      curNode.item[1][2] = blue;
     }
+    if(curNode.item[1][0] == curNode.prev().item[1][0] &&
+       curNode.item[1][1] == curNode.prev().item[1][1] &&
+       curNode.item[1][2] == curNode.prev().item[1][2]){
+      curNode.item[0][0] = curNode.item[0][0] + curNode.prev().item[0][0];
+      list.remove(curNode.prev());
+    }
+    if(curNode.item[1][0] == curNode.next().item[1][0] &&
+       curNode.item[1][1] == curNode.next().item[1][1] &&
+       curNode.item[1][2] == curNode.next().item[1][2]){
+      curNode.item[0][0] = curNode.item[0][0] + curNode.next().item[0][0];
+      list.remove(curNode.next());
+    }
+
+
 
     check();
   }

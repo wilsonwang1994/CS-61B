@@ -9,4 +9,13 @@ public class DListNode{
     prev = null;
     next = null;
   }
+
+  protected DListNode next(){
+    return next;
+  }
+
+  protected DListNode prev(){
+    return prev;
+  }
+
 }
