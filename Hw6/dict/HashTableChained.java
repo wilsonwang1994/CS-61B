@@ -205,6 +205,33 @@ public class HashTableChained implements Dictionary {
     numOfEntries = 0;
   }
 
+  public String toString(){
+    String result = "";
+    for(int i=0; i<numOfBuckets; i++){
+      ListNode curNode = hashTable[i].front();
+      if(hashTable[i].length() == 0){
+        continue;
+      }
+      try{
+      result = result + i + " ------->[ ";
+      while(curNode.isValidNode()){
+        result = result + "(" +
+                 ((Entry)(curNode.item())).key() +
+                 " , " +
+                 ((Entry)(curNode.item())).value() + ") ";
+        curNode = curNode.next();
+      }
+      result = result + " ]\n";
+
+      } catch(InvalidNodeException e) {
+        System.err.println("Remove: " + e);
+      }
+
+    }
+    return result;
+  }
+
+
   public String[] String() {
     String[] res = new String[numOfBuckets / 10 + 1];
     String s = "";

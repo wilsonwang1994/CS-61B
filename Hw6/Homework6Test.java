@@ -63,53 +63,62 @@ public class Homework6Test {
 
 
     System.out.println("=====================size, isEmpty=========================");
-    System.out.println("table's size is: " + table.size());
-    System.out.println("table is Empty: " + table.isEmpty());
+    HashTableChained table1 = new HashTableChained(25);
+    System.out.println("table1's size is: " + table1.size());
+    System.out.println("table1 is Empty: " + table1.isEmpty());
 
     System.out.println("=====================insert================================");
-    table.insert("1", "The first one");
-    table.insert("2", "The second one");
-    table.insert("3", "The third one");
-    table.insert("what", "nani?");
-    table.insert("the","Eh-heng");
-    table.insert("hell!","impolite");
-    System.out.println("table's size is: " + table.size());
-    System.out.println("table is Empty: " + table.isEmpty());
-    String [] output = table.String();
-    for(String s : output){
-      if(s != null) {
-        System.out.println(s);
-      }
-    }
+    table1.insert("1", "The first one");
+    table1.insert("2", "The second one");
+    table1.insert("3", "The third one");
+    table1.insert("3", "The third one");
+    table1.insert("3", "The third one");
+    table1.insert("3", "The third one");
+    table1.insert("3", "The third one");
+    table1.insert("what", "nani?");
+    table1.insert("the","Eh-heng");
+    table1.insert("hell!","impolite");
+    System.out.println(table1);
+    // System.out.println("table's size is: " + table.size());
+    // System.out.println("table is Empty: " + table.isEmpty());
+    // String [] output = table.String();
+    // for(String s : output){
+    //   if(s != null) {
+    //     System.out.println(s);
+    //   }
+    // }
 
 
     System.out.println("====================find, remove===========================");
-    Entry e1 = table.find("6");
-    if(e1 != null)
+    Entry e1 = table1.find("6");
+    if(e1 != null){
       System.out.println("The item found is: [ " + e1.toString() + " ]");
-    else
+    } else{
       System.out.println("The is no such item in the table to be found.");
-
-    Entry e2 = table.remove("hell!");
-    if(e2 != null)
-      System.out.println("The item deleted is: [ " + e2.toString() + " ]");
-    else
-      System.out.println("The is no such item in the table to be deleted.");
-    output = table.String();
-    for(String s : output){
-      if(s != null) {
-        System.out.println(s);
-      }
     }
+    Entry e2 = table1.remove("hell!");
+    if(e2 != null){
+      System.out.println("The item deleted is: [ " + e2.toString() + " ]");
+    } else{
+      System.out.println("The is no such item in the table to be deleted.");
+    }
+    System.out.println(table1);
+    // output = table1.String();
+    // for(String s : output){
+    //   if(s != null) {
+    //     System.out.println(s);
+    //   }
+    // }
 
     System.out.println("=====================makeEmpty=============================");
-    table.makeEmpty();
-    output = table.String();
-    for(String s : output){
-      if(s != null) {
-        System.out.println(s);
-      }
-    }
+    table1.makeEmpty();
+    System.out.println(table1);
+    // output = table.String();
+    // for(String s : output){
+    //   if(s != null) {
+    //     System.out.println(s);
+    //   }
+    // }
   }
 
 }
