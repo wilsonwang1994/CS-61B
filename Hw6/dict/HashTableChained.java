@@ -77,8 +77,11 @@ public class HashTableChained implements Dictionary {
 
   int compFunction(int code) {
     // Replace the following line with your solution.
-    int result = ((97 * code + 307) % 701) % hashTable.length;
-    return result;
+    code = (233333 * code + 23333333) % 16908799;
+    if (code < 0) {
+      code = (code + 16908799)  % 16908799;
+    }
+    return code % numOfBuckets;
   }
 
   /**

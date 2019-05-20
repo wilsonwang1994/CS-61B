@@ -71,22 +71,18 @@ public class Homework6Test {
     table1.insert("1", "The first one");
     table1.insert("2", "The second one");
     table1.insert("3", "The third one");
-    table1.insert("3", "The third one");
-    table1.insert("3", "The third one");
-    table1.insert("3", "The third one");
-    table1.insert("3", "The third one");
     table1.insert("what", "nani?");
     table1.insert("the","Eh-heng");
     table1.insert("hell!","impolite");
     System.out.println(table1);
-    // System.out.println("table's size is: " + table.size());
-    // System.out.println("table is Empty: " + table.isEmpty());
-    // String [] output = table.String();
-    // for(String s : output){
-    //   if(s != null) {
-    //     System.out.println(s);
-    //   }
-    // }
+    System.out.println("table's size is: " + table.size());
+    System.out.println("table is Empty: " + table.isEmpty());
+    String [] output = table.String();
+    for(String s : output){
+      if(s != null) {
+        System.out.println(s);
+      }
+    }
 
 
     System.out.println("====================find, remove===========================");
@@ -103,22 +99,22 @@ public class Homework6Test {
       System.out.println("The is no such item in the table to be deleted.");
     }
     System.out.println(table1);
-    // output = table1.String();
-    // for(String s : output){
-    //   if(s != null) {
-    //     System.out.println(s);
-    //   }
-    // }
+    output = table1.String();
+    for(String s : output){
+      if(s != null) {
+        System.out.println(s);
+      }
+    }
 
     System.out.println("=====================makeEmpty=============================");
     table1.makeEmpty();
     System.out.println(table1);
-    // output = table.String();
-    // for(String s : output){
-    //   if(s != null) {
-    //     System.out.println(s);
-    //   }
-    // }
+    output = table.String();
+    for(String s : output){
+      if(s != null) {
+        System.out.println(s);
+      }
+    }
   }
 
 }
